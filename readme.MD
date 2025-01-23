@@ -4,7 +4,7 @@ This is a simple expense tracker API built with **Node.js** and **MongoDB**. The
 
 ## Features
 
-- User authentication with JWT(need to implement it yet)
+- User authentication with JWT(need to implement it yet.)
 - Expense management (Create, Read, Update, Delete)
 - MongoDB database integration
 
