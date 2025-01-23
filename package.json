@@ -1,0 +1,17 @@
+{
+  "name": "crud-api",
+  "version": "1.0.0",
+  "description": "A Simple CRUD API for managing expenses ",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "\"CRUD\"",
+    "\"API\"",
+    "\"NODE_JS\""
+  ],
+  "author": "EHTISHAM UL HAQ RAO",
+  "license": "ISC"
+}
