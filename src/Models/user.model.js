@@ -11,7 +11,7 @@ const userSchema = new Schema({
         required : true,
         unique:true,
         trim:true,
-        lowercase:true
+        
     },
     email:
 {
@@ -45,6 +45,10 @@ budget: {
     type: Number,
     required: true,
     default: 20000
+  },
+refreshToken: {
+    type: String,
+    
   },
 
 },{

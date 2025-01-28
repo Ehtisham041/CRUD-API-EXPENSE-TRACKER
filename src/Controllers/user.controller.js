@@ -1,7 +1,8 @@
+import { asyncHandler } from "../Utils/asyncHandler.js";
 import {User} from "../Models/user.model.js";
 import {ApiError} from "../Utils/ApiError.js";
-import { asyncHandler } from "../Utils/asyncHandler.js";
 import{ApiResponse} from "../Utils/ApiResponse.js";
+import{uploadOnCloudinary} from "../Utils/cloudinary.js";
 import jwt from "jsonwebtoken";
 
 export const registerUser = asyncHandler(async(req,res,next)=>
@@ -24,20 +25,37 @@ export const registerUser = asyncHandler(async(req,res,next)=>
       throw new ApiError(409, "User already exists");
     }
 
-    console.log(req.file);
+   // console.log(req.file);
     const avatar = req.file?.path;
  
-   console.log(avatar);
+   //console.log(avatar);
 
    if (!avatar) {
     throw new ApiError(400, "Avatar is required");
     
    }
-   return new ApiResponse(201, "User created successfully");
-    // const user = await User.create({username, email, password});
-    // const accessToken = user.generateAccessToken();
-    // const refreshToken = user.generateResfreshToken();
-    // res.status(201).json(new ApiResponse(201,{accessToken, refreshToken}));
+  //upload it on cloudinary 
+  const response = await uploadOnCloudinary({path: avatar});
+  if (!response)
+    {
+    throw new ApiError(500, "Failed to upload avatar on cloudianry");
+    }
+    const user = await User.create({
+      username,
+      email,
+      fullname, 
+      password,
+      avatar: response.url
+    });
+
+    const createdUser =await  User.findById(user._id).select("-password -refreshToken");
+    if (!createdUser) {
+      throw new ApiError(500, "Something went wrong Failed to create user");
+      
+    }
+    return res.status(201)
+    .json(new ApiResponse(200, createdUser,"user register succesfully "));
+   
   }
 
 );

@@ -14,12 +14,10 @@ cloudinary.config
 
 const uploadOnCloudinary = async (file) =>
 {
-    
-
-try
+    try
 {
-    console.log('Uploading file to cloudinary');
-    console.log('Cloudinary Config:', process.env.CLOUDINARY_NAME, process.env.CLOUDINARY_API_KEY, process.env.CLOUDINARY_SECRET);
+    console.log('Uploading file to cloudinary in (utils file)');
+   // console.log('Cloudinary Config:', process.env.CLOUDINARY_NAME, process.env.CLOUDINARY_API_KEY, process.env.CLOUDINARY_SECRET);
 
     if (!file ) throw new Error('No file received o invalid file path');
     console.log(file);
@@ -29,14 +27,15 @@ try
     });
     //file has been uploaded to cloudinary
     console.log('File uploaded successfully');
-    console.log(result);
+   // console.log(result);
     console.log('file url ', result.url);
     return result;
     
 
 }
 catch (error) {
-   // fs.unlinkSync(file);
+   //unlink the file from the temp folder
+    fs.unlinkSync(file);
    console.log('File upload failed');
     console.log(error.message);
     return null;
