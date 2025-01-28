@@ -35,6 +35,12 @@ password:
 
 
 },
+avatar:
+{
+    type:String,
+    default : 'default.jpg',
+},
+
 budget: {
     type: Number,
     required: true,
@@ -59,9 +65,25 @@ userSchema.pre("save", async function(next)
   };
   
 
+userSchema.methods.generateAccessToken = function()
+{
+    return jwt.sign({
+        id:this._id,
+        email:this.email,
+        username:this.username,
+        
+    
+    }, process.env.ACCESS_TOKEN_SECRET, 
+    {expiresIn: process.env.ACCESS_TOKEN_EXPIRY})
+}
+ userSchema.methods.generateResfreshToken = function()
+ {
+    return jwt.sign({
+        id:this._id,
+    }, process.env.REFRESH_TOKEN_SECRET,
+    {expiresIn: process.env.REFRESH_TOKEN_EXPIRY})
+}
 
-  
-  
   
 
 
